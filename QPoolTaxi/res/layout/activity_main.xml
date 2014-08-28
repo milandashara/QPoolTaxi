@@ -9,19 +9,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1" >
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
+            android:layout_weight="0.63"
+            android:background="#004cff"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textStyle="bold"
             android:textColor="#ffe5f6"
-            android:background="#004cff"
-            android:layout_weight="0.63" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/EditTextName"
@@ -47,6 +47,13 @@
             android:prompt="@string/user_gender" >
         </Spinner>
 
+        <EditText
+            android:id="@+id/EditTextPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_password"
+            android:inputType="textPassword" >
+        </EditText>
         <!-- Put form controls here -->
 
         <Button

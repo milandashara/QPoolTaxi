@@ -10,5 +10,8 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="register">Register</string>
+     <string name="error_msg_register">Registeration Failed</string>
+     <string name="error_msg_alreadyRegistered">Already Registered</string>
+      <string name="user_password">Password</string>
 
 </resources>

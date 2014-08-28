@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/user_name"
             android:inputType="textPersonName" >
-        </EditText>
+        </EditText> 
 
         <EditText
             android:id="@+id/EditTextPhone"
@@ -63,6 +63,17 @@
             android:onClick="register"
             android:text="@string/register" >
         </Button>
+        
+        <!-- Put form controls here -->
+
+        <Button
+            android:id="@+id/ButtonSignIn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showSignIn"
+            android:text="@string/user_signIn" >
+        </Button>
+        
     </LinearLayout>
 
 </ScrollView>

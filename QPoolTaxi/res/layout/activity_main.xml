@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/user_name"
             android:inputType="textPersonName" >
-        </EditText> 
+        </EditText>
 
         <EditText
             android:id="@+id/EditTextPhone"

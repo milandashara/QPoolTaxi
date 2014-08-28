@@ -10,5 +10,11 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="register">Register</string>
+    <string-array name="number">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 
 </resources>

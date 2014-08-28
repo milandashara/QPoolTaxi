@@ -42,9 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.02" />
-
+            android:src="@drawable/ProgressStep"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
 

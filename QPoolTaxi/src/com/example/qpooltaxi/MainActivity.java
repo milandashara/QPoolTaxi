@@ -42,28 +42,26 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
+		
 		// Restore preferences
 		SharedPreferences settings = getSharedPreferences(userPreference, 0);
-		
-		String name=settings.getString("name", user.getName());
-		String password=settings.getString("password", user.getPassword());
-		String mobile=settings.getString("mobile", user.getPhone());
-		String gender=settings.getString("gender", user.getGender());
-		String deviceId=settings.getString("deviceId", user.getDeviceId());
-		
-		if(mobile!=null)
-		{
+
+		String name = settings.getString("name", user.getName());
+		String password = settings.getString("password", user.getPassword());
+		String mobile = settings.getString("mobile", user.getPhone());
+		String gender = settings.getString("gender", user.getGender());
+		String deviceId = settings.getString("deviceId", user.getDeviceId());
+
+		if (mobile != null) {
 			user.setDeviceId(deviceId);
 			user.setGender(gender);
 			user.setName(name);
 			user.setPassword(password);
 			user.setPhone(mobile);
-			new SignInAsyncTask().execute(user.getPhone(),user.getPassword());
+			new SignInAsyncTask().execute(user.getPhone(), user.getPassword());
 		}
 		
-		
+
 	}
 
 	@Override
@@ -229,60 +227,55 @@ public class MainActivity extends Activity {
 		i.putExtra("user", user);
 
 	}
-	
-	
-	public class SignInAsyncTask extends AsyncTask<String, Integer, Integer>{
-		 
+
+	public class SignInAsyncTask extends AsyncTask<String, Integer, Integer> {
+
 		@Override
 		protected Integer doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			try {
-				return postData(params[0],params[1]);
+				return postData(params[0], params[1]);
 			} catch (ClientProtocolException e) {
-				String text = getResources().getString(
-						R.string.error_msg_sigIn);
+				String text = getResources()
+						.getString(R.string.error_msg_sigIn);
 				showToastMessage(text);
 			} catch (IOException e) {
-				String text = getResources().getString(
-						R.string.error_msg_sigIn);
+				String text = getResources()
+						.getString(R.string.error_msg_sigIn);
 				showToastMessage(text);
 			}
 			return 0;
 		}
- 
-		protected void onPostExecute(Integer status){
-			
-			
+
+		protected void onPostExecute(Integer status) {
+
 			if (status == Constants.USER_SUCCESS) {
 				showFindPartnerActivity(null);
 
 			} else if (status == Constants.USER_ALREADY_EXIST) {
-				//user name / password is wrong
+				// user name / password is wrong
 				String text = getResources().getString(
 						R.string.error_msg_incorrect_credential);
 				showToastMessage(text);
 			} else {
-				String text = getResources().getString(
-						R.string.error_msg_sigIn);
-				showToastMessage(text);
+				/*String text = getResources()
+						.getString(R.string.error_msg_sigIn);
+				showToastMessage(text);*/
+				setContentView(R.layout.activity_main);
 
 			}
-			
-			
+
 		}
-		protected void onProgressUpdate(Integer... progress){
-	//		pb.setProgress(progress[0]);
+
+		protected void onProgressUpdate(Integer... progress) {
+			// pb.setProgress(progress[0]);
 		}
- 
-		public Integer  postData(String mobile, String password) throws ClientProtocolException, IOException {
+
+		public Integer postData(String mobile, String password)
+				throws ClientProtocolException, IOException {
 			return LoginActivity.signIn(mobile, password);
 		}
-		
-		
-		
- 
+
 	}
-	
-	
 
 }

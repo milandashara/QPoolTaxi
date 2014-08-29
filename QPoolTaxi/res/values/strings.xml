@@ -25,4 +25,6 @@
         <item>3</item>
     </string-array>
 
+    <string name="title_activity_find_partner">FindPartnerActivity</string>
+
 </resources>

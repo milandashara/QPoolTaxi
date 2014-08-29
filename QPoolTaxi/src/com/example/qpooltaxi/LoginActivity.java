@@ -16,9 +16,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.example.common.Constants;
+import com.example.model.User;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -81,7 +83,7 @@ public class LoginActivity extends Activity {
 		
 	}
 
-	public Integer signIn(String mobile, String password) throws ClientProtocolException, IOException {
+	public  static Integer signIn(String mobile, String password) throws ClientProtocolException, IOException {
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(Constants.URL_LOGIN);
@@ -99,7 +101,7 @@ public class LoginActivity extends Activity {
 			HttpResponse response = httpclient.execute(httppost);
 			int status = new Integer(response.getFirstHeader("status").getValue());
 			
-			logger.info("status :"+status);
+			//logger.info("status :"+status);
 			return status;
 
 		
@@ -115,7 +117,7 @@ public class LoginActivity extends Activity {
 	}
 	
 	
-	private class SignInAsyncTask extends AsyncTask<String, Integer, Integer>{
+	public class SignInAsyncTask extends AsyncTask<String, Integer, Integer>{
 		 
 		@Override
 		protected Integer doInBackground(String... params) {
@@ -138,7 +140,7 @@ public class LoginActivity extends Activity {
 			
 			
 			if (status == Constants.USER_SUCCESS) {
-				// sign in  success full
+				showFindPartnerActivity(null);
 
 			} else if (status == Constants.USER_ALREADY_EXIST) {
 				//user name / password is wrong
@@ -164,6 +166,13 @@ public class LoginActivity extends Activity {
 		
 		
  
+	}
+
+
+	public void showFindPartnerActivity(User user) {
+		Intent i = new Intent(this, FindPartnerActivity.class);
+		startActivity(i);
+		
 	}
 	
 	

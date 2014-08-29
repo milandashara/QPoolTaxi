@@ -17,6 +17,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -31,15 +32,38 @@ import com.example.common.Constants;
 import com.example.common.Gender;
 import com.example.model.User;
 
-
 public class MainActivity extends Activity {
 
 	Logger logger = Logger.getLogger("MainActivity");
+
+	private String userPreference = "loginCredential";
+	private User user = new User();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// Restore preferences
+		SharedPreferences settings = getSharedPreferences(userPreference, 0);
+		
+		String name=settings.getString("name", user.getName());
+		String password=settings.getString("password", user.getPassword());
+		String mobile=settings.getString("mobile", user.getPhone());
+		String gender=settings.getString("gender", user.getGender());
+		String deviceId=settings.getString("deviceId", user.getDeviceId());
+		
+		if(mobile!=null)
+		{
+			user.setDeviceId(deviceId);
+			user.setGender(gender);
+			user.setName(name);
+			user.setPassword(password);
+			user.setPhone(mobile);
+			new SignInAsyncTask().execute(user.getPhone(),user.getPassword());
+		}
+		
+		
 	}
 
 	@Override
@@ -75,7 +99,6 @@ public class MainActivity extends Activity {
 		final EditText passwordField = (EditText) findViewById(R.id.EditTextPassword);
 		String password = passwordField.getText().toString();
 
-		final User user = new User();
 		if (gender.equals("male")) {
 			user.setGender(Gender.M.toString());
 		} else {
@@ -89,7 +112,7 @@ public class MainActivity extends Activity {
 
 		user.setDeviceId(telephonyManager.getDeviceId());
 
-		new RegisterAsyncTask().execute(user);	
+		new RegisterAsyncTask().execute(user);
 	}
 
 	private Integer registerDevice(User user) throws ClientProtocolException,
@@ -160,6 +183,21 @@ public class MainActivity extends Activity {
 			if (status == Constants.USER_SUCCESS) {
 				// registration success full
 
+				// We need an Editor object to make preference changes.
+				// All objects are from android.context.Context
+				SharedPreferences settings = getSharedPreferences(
+						userPreference, 0);
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString("name", user.getName());
+				editor.putString("password", user.getPassword());
+				editor.putString("mobile", user.getPhone());
+				editor.putString("gender", user.getGender());
+				editor.putString("deviceId", user.getDeviceId());
+				// Commit the edits!
+				editor.commit();
+
+				showFindPartnerActivity(user);
+
 			} else if (status == Constants.USER_ALREADY_EXIST) {
 				String text = getResources().getString(
 						R.string.error_msg_alreadyRegistered);
@@ -184,5 +222,67 @@ public class MainActivity extends Activity {
 		}
 
 	}
+
+	public void showFindPartnerActivity(User user) {
+		Intent i = new Intent(this, FindPartnerActivity.class);
+		startActivity(i);
+		i.putExtra("user", user);
+
+	}
+	
+	
+	public class SignInAsyncTask extends AsyncTask<String, Integer, Integer>{
+		 
+		@Override
+		protected Integer doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			try {
+				return postData(params[0],params[1]);
+			} catch (ClientProtocolException e) {
+				String text = getResources().getString(
+						R.string.error_msg_sigIn);
+				showToastMessage(text);
+			} catch (IOException e) {
+				String text = getResources().getString(
+						R.string.error_msg_sigIn);
+				showToastMessage(text);
+			}
+			return 0;
+		}
+ 
+		protected void onPostExecute(Integer status){
+			
+			
+			if (status == Constants.USER_SUCCESS) {
+				showFindPartnerActivity(null);
+
+			} else if (status == Constants.USER_ALREADY_EXIST) {
+				//user name / password is wrong
+				String text = getResources().getString(
+						R.string.error_msg_incorrect_credential);
+				showToastMessage(text);
+			} else {
+				String text = getResources().getString(
+						R.string.error_msg_sigIn);
+				showToastMessage(text);
+
+			}
+			
+			
+		}
+		protected void onProgressUpdate(Integer... progress){
+	//		pb.setProgress(progress[0]);
+		}
+ 
+		public Integer  postData(String mobile, String password) throws ClientProtocolException, IOException {
+			return LoginActivity.signIn(mobile, password);
+		}
+		
+		
+		
+ 
+	}
+	
+	
 
 }

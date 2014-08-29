@@ -16,6 +16,8 @@
     <string name="user_signIn">Sign In</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="user_mobile">Mobile</string>
+    <string name="error_msg_incorrect_credential">Incorrect mobile number / password</string>
+    <string name="error_msg_sigIn">Error occured while sign in </string>
 
     <string-array name="number">
         <item>1</item>

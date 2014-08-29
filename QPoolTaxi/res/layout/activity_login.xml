@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_weight="0.63"
+            android:background="#004cff"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="#ffe5f6"
+            android:textStyle="bold" />
+
+     
+
+        <EditText
+            android:id="@+id/EditLoginPhone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_mobile"
+            android:inputType="phone" >
+        </EditText>
+
+    
+        <EditText
+            android:id="@+id/EditLoginPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_password"
+            android:inputType="textPassword" >
+        </EditText>
+        <!-- Put form controls here -->
+
+        
+
+        <Button
+            android:id="@+id/ButtonSignIn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="signIn"
+            android:text="@string/user_signIn" >
+        </Button>
+        
+    </LinearLayout>
+
+</ScrollView>

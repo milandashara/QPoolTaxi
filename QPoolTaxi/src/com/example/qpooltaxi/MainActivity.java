@@ -60,6 +60,10 @@ public class MainActivity extends Activity {
 			user.setPhone(mobile);
 			new SignInAsyncTask().execute(user.getPhone(), user.getPassword());
 		}
+		else
+		{
+			setContentView(R.layout.activity_main);
+		}
 		
 
 	}
@@ -228,10 +232,10 @@ public class MainActivity extends Activity {
 
 	}
 
-	public class SignInAsyncTask extends AsyncTask<String, Integer, Integer> {
+	public class SignInAsyncTask extends AsyncTask<String, User, User> {
 
 		@Override
-		protected Integer doInBackground(String... params) {
+		protected User doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			try {
 				return postData(params[0], params[1]);
@@ -244,15 +248,15 @@ public class MainActivity extends Activity {
 						.getString(R.string.error_msg_sigIn);
 				showToastMessage(text);
 			}
-			return 0;
+			return null;
 		}
 
-		protected void onPostExecute(Integer status) {
+		protected void onPostExecute(User status) {
 
-			if (status == Constants.USER_SUCCESS) {
-				showFindPartnerActivity(null);
+			if (status.getStatus() == Constants.USER_SUCCESS) {
+				showFindPartnerActivity(user);
 
-			} else if (status == Constants.USER_ALREADY_EXIST) {
+			} else if (user.getStatus() == Constants.USER_ALREADY_EXIST) {
 				// user name / password is wrong
 				String text = getResources().getString(
 						R.string.error_msg_incorrect_credential);
@@ -261,7 +265,7 @@ public class MainActivity extends Activity {
 				/*String text = getResources()
 						.getString(R.string.error_msg_sigIn);
 				showToastMessage(text);*/
-				setContentView(R.layout.activity_main);
+				
 
 			}
 
@@ -271,10 +275,42 @@ public class MainActivity extends Activity {
 			// pb.setProgress(progress[0]);
 		}
 
-		public Integer postData(String mobile, String password)
+		public User postData(String mobile, String password)
 				throws ClientProtocolException, IOException {
-			return LoginActivity.signIn(mobile, password);
+			
+			
+			return signIn(mobile, password);
 		}
+
+	}
+	
+	
+	public  User signIn(String mobile, String password)
+			throws ClientProtocolException, IOException {
+		// Create a new HttpClient and Post Header
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(Constants.URL_LOGIN);
+
+		// Add your data
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+		nameValuePairs.add(new BasicNameValuePair("mobile", mobile));
+
+		nameValuePairs.add(new BasicNameValuePair("password", password));
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		// Execute HTTP Post Request
+		HttpResponse response = httpclient.execute(httppost);
+		int status = new Integer(response.getFirstHeader("status").getValue());
+		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+/*		user.setDeviceId(telephonyManager.getDeviceId());
+		user.setName(response.getFirstHeader("name").getValue());
+		user.setGender(response.getFirstHeader("gender").getValue());*/
+		user.setStatus(status);
+		/*user.setPassword(password);
+		user.setPhone(mobile);*/
+		// logger.info("status :"+status);
+		return user;
 
 	}
 

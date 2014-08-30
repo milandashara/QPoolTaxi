@@ -9,6 +9,15 @@ public class User implements Serializable {
 	private String phone;
 	private String deviceId;
 	private String password;
+	private Integer status=0;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public String getPassword() {
 		return password;

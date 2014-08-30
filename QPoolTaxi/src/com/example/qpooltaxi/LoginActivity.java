@@ -204,8 +204,9 @@ public class LoginActivity extends Activity {
 
 	public void showFindPartnerActivity(User user) {
 		Intent i = new Intent(this, FindPartnerActivity.class);
+		i.putExtra("user", user);
 		startActivity(i);
-
+		
 	}
 
 }

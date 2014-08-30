@@ -77,14 +77,14 @@
     </EditText>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextDestination"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"
         android:layout_below="@+id/editText1"
         android:ems="10"
         android:inputType="text"
-        android:text="Destination" />
+        android:text="changi airport terminal 3" />
 
 <!--     <LinearLayout
         android:layout_width="match_parent"
@@ -116,35 +116,35 @@
         android:orientation="horizontal"
         android:weightSum="1" > -->
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText2"
-            android:layout_alignTop="@+id/spinner1"
-            android:paddingLeft="100dp"
-            android:text="Anyone with you"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/textViewHowMany"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_weight="0.17"
+        android:paddingLeft="100dp"
+        android:text="Member Required"
+        android:textSize="20sp" />
 
         <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="wrap_content"
+            android:id="@+id/spinnerHowMany"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/editText2"
-            android:layout_below="@+id/editText2"
-            android:layout_marginTop="31dp"
+            android:layout_gravity="fill_vertical|center_horizontal"
             android:entries="@array/number"
             tools:listitem="@android:layout/simple_spinner_item" />
+
   <!--   </LinearLayout> -->
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonFindPartner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText2"
         android:layout_alignRight="@+id/editText2"
         android:layout_below="@+id/spinner2"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="28dp"
+        android:onClick="showPartners"
         android:text="Find Partners" />
 
 </LinearLayout>

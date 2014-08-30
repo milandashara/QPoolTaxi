@@ -227,8 +227,9 @@ public class MainActivity extends Activity {
 
 	public void showFindPartnerActivity(User user) {
 		Intent i = new Intent(this, FindPartnerActivity.class);
-		startActivity(i);
 		i.putExtra("user", user);
+		startActivity(i);
+		
 
 	}
 
